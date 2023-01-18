@@ -63,7 +63,7 @@ public class ExamController {
 		return ResponseEntity.status(HttpStatus.OK).body(exam);
 	}
 	@DeleteMapping("/deleteExam/{id}")
-	public ResponseEntity<?> DeleteExam(@PathVariable int id){
+	public ResponseEntity<?> deleteExam(@PathVariable int id){
 		service.deleteExamById(id);
 		return ResponseEntity.status(HttpStatus.OK).body("1 Exam deleted");
 	}

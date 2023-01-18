@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entity.Result;
 import com.example.service.ResultService;
 
+
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/result")
@@ -32,7 +34,8 @@ public class ResultController {
 	}
 	@PostMapping("/addResult")
 	public ResponseEntity<?> addResult( @RequestBody Result result){
-		Result addedResult = service.addNewResult(result);
+		
+		 Result addedResult = service.addNewResult(result);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(addedResult);
 	}
