@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.dto.QuestionResponse;
-import com.example.entity.Question;
+import com.example.model.Question;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer>{
 	

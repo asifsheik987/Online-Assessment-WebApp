@@ -2,7 +2,7 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.entity.Subject;
+import com.example.model.Subject;
 
 public interface SubjectService {
 	

@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.entity.Question;
-import com.example.entity.Result;
+import com.example.model.Question;
+import com.example.model.Result;
 
 @Repository
 public interface ResultRepository extends JpaRepository<Result, Integer>{

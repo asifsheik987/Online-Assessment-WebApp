@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.example.entity.Exam;
+import com.example.model.Exam;
 
 public interface ExamService {
 	

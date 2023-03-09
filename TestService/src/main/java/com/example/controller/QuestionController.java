@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.QuestionRequest;
-import com.example.entity.Exam;
-import com.example.entity.Question;
-import com.example.entity.Subject;
 import com.example.exception.EmptyInputException;
+import com.example.exception.ExceptionHandler;
+import com.example.model.Exam;
+import com.example.model.Question;
+import com.example.model.Subject;
 import com.example.service.ExamService;
 import com.example.service.ExamServiceImpl;
 import com.example.service.QuestionService;
@@ -43,18 +44,18 @@ public class QuestionController {
 
 	@GetMapping("/allQuestions")
 	public ResponseEntity<?> getAllQuestions() {
+		try {
 		List<Question> questions = service.getAllQuestion();
 		return ResponseEntity.status(HttpStatus.OK).body(questions);
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 	}
 
 	@PostMapping("/addQuestion")
 	public ResponseEntity<?> addNewQuestion(@RequestBody QuestionRequest data) {
-		if (data.getQname().equals("") || data.getAnswer().equals("") || data.getSubjectName().equals("")
-				|| data.getOptionOne().equals("") || data.getOptionTwo().equals("")
-				|| data.getOptionThree().equals("")) {
-
-			throw new EmptyInputException();
-		}
+		try {
 		Question question = new Question();
 		Subject subject = subService.getSubjectByName(data.getSubjectName());
 		Exam exam = exService.getParticularExam(data.getExamId());
@@ -71,12 +72,24 @@ public class QuestionController {
 		question.setExamLevel(data.getExamLevel());
 		Question Question_added = service.addNewQuestion(question);
 		return ResponseEntity.status(HttpStatus.CREATED).body(Question_added);
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}catch(Exception e) {
+			ExceptionHandler ex = new ExceptionHandler("605","Error in Question Controller!!!");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 	}
 
 	@GetMapping("/getQuestionsForExam/{examId}")
 	public ResponseEntity<?> getAllQuestionsForExam(@PathVariable(name = "examId") int id) {
+		try {
 		List<Question> questions = service.getAllQuestionForExam(id);
 		return ResponseEntity.status(HttpStatus.OK).body(questions);
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 
 	}
 
@@ -89,19 +102,30 @@ public class QuestionController {
 
 	@DeleteMapping("/deleteQuestion/{id}")
 	public ResponseEntity<?> deleteQuestion(@PathVariable(name = "id") int id) {
+		try {
 		service.deleteQuestion(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Question Deleted");
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 	}
 
 	@GetMapping("/getQuestionsBySubject/{subjectName}")
 	public ResponseEntity<?> getQuestionsBysubject(@PathVariable String subjectName) {
+		try {
 		List<Question> questions = service.getAllQuestionsBySubject(subjectName);
 		return ResponseEntity.status(HttpStatus.OK).body(questions);
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 	}
 
 	@PutMapping("/addQuestionToExam/{examId}/{questionId}")
 	public ResponseEntity<?> addQuestionToExam(@PathVariable(name = "examId") int examId,
 			@PathVariable(name = "questionId") int questionId) {
+		try {
 		Question question = service.getParticularQuestion(examId, questionId);
 		System.out.println(question);
 		Exam exam = exService.getParticularExam(examId);
@@ -112,12 +136,17 @@ public class QuestionController {
 		question.setExam(examSet);
 		Question questionupdated = service.addNewQuestion(question);
 		return ResponseEntity.status(HttpStatus.OK).body(questionupdated);
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 
 	}
 
 	@PutMapping("/deleteQuestionFromExam/{examId}/{questionId}")
-	public ResponseEntity<?> adddeleteQuestionFromExam(@PathVariable(name = "examId") int examId,
+	public ResponseEntity<?> deleteQuestionFromExam(@PathVariable(name = "examId") int examId,
 			@PathVariable(name = "questionId") int questionId) {
+		try {
 		Question question = service.getParticularQuestion(examId, questionId);
 		System.out.println(question);
 		Exam exam = exService.getParticularExam(examId);
@@ -133,11 +162,16 @@ public class QuestionController {
 			service.deleteQuestion(questionId);
 			return ResponseEntity.status(HttpStatus.OK).body("Question Deleted");
 		}
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 
 	}
 
 	@DeleteMapping("/removeQFromExam/{examId}")
-	public ResponseEntity<?> delQuestionOnExam(@PathVariable int examId) {
+	public ResponseEntity<?> delQuestionsOnExam(@PathVariable int examId) {
+		try {
 		List<Question> questions = service.getAllQuestionForExam(examId);
 		Exam exam = exService.getParticularExam(examId);
 		for (Question q : questions) {
@@ -152,6 +186,10 @@ public class QuestionController {
 
 		}
 		return ResponseEntity.status(HttpStatus.OK).body("Questions related exam removed");
+		}catch(ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 
 	}
 

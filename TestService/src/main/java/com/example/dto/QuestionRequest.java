@@ -3,8 +3,8 @@ package com.example.dto;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 
-import com.example.entity.Exam;
-import com.example.entity.Subject;
+import com.example.model.Exam;
+import com.example.model.Subject;
 
 public class QuestionRequest {
 	

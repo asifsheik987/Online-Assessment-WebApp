@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Subject;
 import com.example.exception.EmptyInputException;
+import com.example.exception.ExceptionHandler;
+import com.example.model.Subject;
 import com.example.service.SubjectService;
 import com.example.service.SubjectServiceImpl;
 
@@ -26,35 +27,55 @@ import com.example.service.SubjectServiceImpl;
 @CrossOrigin(origins = "*")
 @RequestMapping("/subjects")
 public class SubjectController {
-	
+
 	@Autowired
 	private SubjectService service;
-	
+
 	@GetMapping("/allSubjects")
-	public ResponseEntity<?> getAllSubjects(){
-		List<Subject> subjects = service.getAllSubjects();
-		return ResponseEntity.status(HttpStatus.OK).body(subjects);
-	}
-	@PostMapping("/addSubject")
-	public ResponseEntity<?> addNewSubject(@RequestBody Subject subject){
-		if(subject.getName()=="") {
-			throw new EmptyInputException();
+	public ResponseEntity<?> getAllSubjects() {
+		try {
+			List<Subject> subjects = service.getAllSubjects();
+			return ResponseEntity.status(HttpStatus.OK).body(subjects);
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
-		Subject Subject_added = service.addNewSubject(subject);
-		return ResponseEntity.status(HttpStatus.CREATED).body(Subject_added);
 	}
+
+	@PostMapping("/addSubject")
+	public ResponseEntity<?> addNewSubject(@RequestBody Subject subject) {
+		try {
+			Subject Subject_added = service.addNewSubject(subject);
+			return ResponseEntity.status(HttpStatus.CREATED).body(Subject_added);
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		} catch (Exception e) {
+			ExceptionHandler ex = new ExceptionHandler("605", "Error in Controller!!!");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
+	}
+
 	@DeleteMapping("/deleteSubject/{subjectId}")
 	public ResponseEntity<?> deleteSubject(@PathVariable(name = "subjectId") int id) {
-		service.deleteSubjectById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("1 is deleted");
-		
+		try {
+			service.deleteSubjectById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("1 is deleted");
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 	}
+
 	@GetMapping("/getSubject/{subjectName}")
-	public ResponseEntity<?> getSubjectByName(@PathVariable(name = "subjectName")String name){
-		
+	public ResponseEntity<?> getSubjectByName(@PathVariable(name = "subjectName") String name) {
+		try {
 			Subject subject = service.getSubjectByName(name);
 			return ResponseEntity.status(HttpStatus.OK).body(subject);
-		
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
 	}
 
 }

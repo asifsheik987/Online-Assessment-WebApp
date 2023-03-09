@@ -2,7 +2,7 @@ package com.example.service;
 
 import java.util.List;
 
-import com.example.entity.Question;
+import com.example.model.Question;
 
 public interface QuestionService {
 		 public List<Question> getAllQuestion();
