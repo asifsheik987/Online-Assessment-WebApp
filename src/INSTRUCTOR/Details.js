@@ -3,13 +3,16 @@
    import axios from "axios";
 
    import {useEffect , useState} from "react";
+import { useDispatch } from "react-redux";
    import { useNavigate, useParams} from "react-router-dom";
 import authService from "../authentication/services/AuthenticationService";
+import { getExamById } from "../redux/slices/examSlice";
 
     
     function Details(){
         
         const {id} = useParams();
+        const dispatch = useDispatch();
 
         const [exam  , setExam] = useState({
             examName:"",
@@ -22,9 +25,11 @@ import authService from "../authentication/services/AuthenticationService";
         useEffect(() => {
           
              async function getExamDetails(){
-                const value = await axios.get(`http://localhost:8002/exam/getExam/${id}`);
-                setExam(value.data);
-                console.log(exam);
+                //const value = await axios.get(`http://localhost:8002/exam/getExam/${id}`);
+                dispatch(getExamById(id)).unwrap().then(response=>{
+                  setExam(response);
+                })
+                //setExam(value.data);
              }
              getExamDetails();
         },[id])

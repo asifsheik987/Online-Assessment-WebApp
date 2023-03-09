@@ -70,39 +70,39 @@ function AddQuestion() {
         <h2>Adding Question</h2>
       </div>
 
-      <Form className="card" ref={form}>
+      <Form className="card" ref={form} style={{"background-color":"transparent"}}>
         <label ><b>Question Name</b> </label>
-        <Input className="form-control" onChange={(e) => onInputChange(e)}
+        <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="qname"
           type="text" placeholder="Enter Question" validations={[required]} />
 
         <label ><b>Enter Option A </b></label>
-        <Input className="form-control" onChange={(e) => onInputChange(e)}
+        <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="optionOne"
           type="text" placeholder="Enter Option A" validations={[required]} />
 
         <label ><b>Enter Option B</b></label>
-        <Input className="form-control" onChange={(e) => onInputChange(e)}
+        <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="optionTwo"
           type="text" placeholder="Enter Option B" validations={[required]} />
 
         <label ><b>Enter Option C</b></label>
-        <Input className="form-control" onChange={(e) => onInputChange(e)}
+        <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="optionThree"
           type="text" placeholder="Enter Option C" validations={[required]} />
 
         <label ><b>Enter Option D</b></label>
-        <Input className="form-control" onChange={(e) => onInputChange(e)}
+        <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="optionFour"
           type="text" placeholder="Enter Option D" validations={[required]} />
 
         <label ><b>Enter Question Answer</b></label>
-        <Input className="form-control" onChange={(e) => onInputChange(e)}
+        <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="answer"
           type="text" placeholder="Enter Question answer (don't write option A,B,C,D)" validations={[required]} />
 
         <label ><b>Level</b></label>
-        <Select className="form-control" onChange={(e) => onInputChange(e)}
+        <Select className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="examLevel"
           type="text" placeholder="Enter Level" validations={[required]} >
           <option selected>Select Level</option>
@@ -113,7 +113,7 @@ function AddQuestion() {
 
 
         <label ><b>Enter Subject</b></label>
-        <Input className="form-control" onChange={(e) => onInputChange(e)}
+        <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => onInputChange(e)}
           name="subjectName" id="subjectField"
           type="text" placeholder="Enter Subject" value={subjectName} disabled validations={[required]} />
 

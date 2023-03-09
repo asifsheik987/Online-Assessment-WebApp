@@ -4,6 +4,8 @@ import CheckButton from "react-validation/build/button";
 import { useState, useEffect, useRef } from "react";
 
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addSubject, deleteSubject, getAllSubjects } from "../redux/slices/SubjectSlice";
 const required = (value) => {
     if (!value) {
         return (
@@ -16,6 +18,7 @@ const required = (value) => {
 function Subject() {
     const form = useRef();
     const checkBtn = useRef();
+    const dispatch = useDispatch();
 
     const [display, setDisplay] = useState({
         display: "none"
@@ -31,19 +34,20 @@ function Subject() {
 
 
     const [subjects, setSubjects] = useState([]);
-
     useEffect(() => {
+        dispatch(getAllSubjects()).unwrap().then((response)=>{
+            setSubjects(response);
+        })
 
-        async function getAllSubject() {
-            let value = await axios.get(`http://localhost:8002/subjects/allSubjects`);
-            console.log(value);
-            setSubjects(value.data);
-            //console.log(value.data[0]);
-        }
-        getAllSubject();
+        // async function getAllSubject() {
+        //     dispatch(getAllSubject());
+        //     let value = await axios.get(`http://localhost:8002/subjects/allSubjects`);
+        //     setSubjects(value.data);
+        //     //console.log(value.data[0]);
+        // }
+        // getAllSubject();
     }, []);
 
-    // --------------------Adding Subject And re-render subject component-----------------
 
     const [subject, setSubject] = useState({
         name: "",
@@ -53,7 +57,6 @@ function Subject() {
         setSubject({
             name: e.target.value.toUpperCase()
         });
-        //   console.log(subject);
     }
 
 
@@ -61,21 +64,20 @@ function Subject() {
         e.preventDefault();
         form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
-        await axios.post(`http://localhost:8002/subjects/addSubject`, subject);
-        setStatus(true);
+            dispatch(addSubject(subject));
+            //await axios.post(`http://localhost:8002/subjects/addSubject`, subject);
+            setStatus(true);
         }
     }
 
     const [status, setStatus] = useState();
 
-
-
-    // ------------------------Deleting Subject and reload component------------------------------
-
-    async function deleteSubject(id) {
-        await axios.delete(`http://localhost:8002/subjects/deleteSubject/${id}`);
-        setStatusDelete(true);
-    }
+        function removeSubject(id) {
+            //await axios.delete(`http://localhost:8002/subjects/deleteSubject/${id}`);
+            dispatch(deleteSubject(id));
+            setStatusDelete(true);
+        }
+    
 
     const [statusDelete, setStatusDelete] = useState();
 
@@ -138,7 +140,7 @@ function Subject() {
                                     return (
                                         <tr key={i}>
                                             <td>{data.name}</td>
-                                            <td><button className="btn btn-outline-danger" onClick={() => deleteSubject(data.id)}>Delete</button></td>
+                                            <td><button className="btn btn-outline-danger" onClick={() => removeSubject(data.id)}>Delete</button></td>
                                         </tr>
                                     );
 
@@ -157,9 +159,9 @@ function Subject() {
                 {/* Add Subject */}
 
 
-                <Form style={display} ref = {form}>
+                <Form style={display} ref={form}>
                     <label htmlFor="">Enter Subject </label>
-                    <Input className="form-control" onChange={(e) => handleInput(e)} type="text" placeholder="Enter Subject name" validations={[required]}/>
+                    <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => handleInput(e)} type="text" placeholder="Enter Subject name" validations={[required]} />
 
                     <div>
                         <button className="btn btn-outline-primary m-2" onClick={handleAddNewSubject}  >Add</button>

@@ -4,7 +4,9 @@ import { isEmail } from "validator";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import authService from '../services/AuthenticationService';
+//import authService from '../services/AuthenticationService';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/slices/AuthSlice';
 
 const required = (value) =>{
   if (!value) {
@@ -55,6 +57,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -80,9 +83,13 @@ const Register = () => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      authService.register(username, email, password).then(
+      console.log(username,email,password);
+      dispatch(register({username,email,password}))
+      .unwrap()
+      .then(
         (response) => {
           setMessage(response.data.message);
+          console.log(response.data);
           setSuccessful(true);
         },
         (error) => {

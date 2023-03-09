@@ -21,7 +21,7 @@ const getStudentBoard =()=>{
 }
 
 const getInstructorBoard = ()=>{
-    return axios.get("http://localhost:8001/api/testUser/instructor",
+    return axios.get("http://loclhost:8001/api/testUser/instructor",
     {
         headers: (
             (user && user.accessToken)?{Authorization: "Bearer " + user.accessToken}:{}

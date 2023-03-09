@@ -1,13 +1,14 @@
 
 import { useCallback, useEffect, useState } from 'react';
-import eventBus from './authentication/common/EventBus';
+import { useDispatch,useSelector } from 'react-redux';
+//import eventBus from './authentication/common/EventBus';
 import Home from './authentication/components/Home';
 import Login from './authentication/components/Login';
 import Register from './authentication/components/Register';
 import StudentBoard from './authentication/components/StudentBoard';
 import InstructorBoard from './authentication/components/InstructorBoard';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import authService from './authentication/services/AuthenticationService';
+// import authService from './authentication/services/AuthenticationService';
 import Subject from './INSTRUCTOR/Subject';
 import Exam from './INSTRUCTOR/Exam';
 import Question from './INSTRUCTOR/Question';
@@ -23,38 +24,37 @@ import Result from './student/Result';
 import Solutions from './student/Solutions';
 import StudentResult from './INSTRUCTOR/StudentResult';
 import AllExam from './INSTRUCTOR/AllExam';
+import { logout } from './redux/slices/AuthSlice';
 
 function App() {
   const [showInstructorBoard ,setShowInstructorBoard] = useState(false);
   const [showStudentBoard,setShowStudentBoard] = useState(false);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const {user: currentUser} = useSelector((state)=>state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const user = authService.getCurrentUser();
-    if(user){
-      setCurrentUser(user);
-      setShowInstructorBoard(user.roles.includes("INSTRUCTOR"));
-      setShowStudentBoard(user.roles.includes("STUDENT"));
+    if(currentUser){
+      setShowInstructorBoard(currentUser.roles.includes("INSTRUCTOR"));
+      setShowStudentBoard(currentUser.roles.includes("STUDENT"));
     }
     // else{
     //   setShowInstructorBoard(false);
     //   setShowStudentBoard(false);
     // }
 
-    eventBus.on("logout",()=>{
-      logOut();
-    });
-    return () =>{
-      eventBus.remove("logout");
-    };
+    // eventBus.on("logout",()=>{
+    //   logOut();
+    // });
+    // return () =>{
+    //   eventBus.remove("logout");
+    // };
   },[]);
 
-  const logOut = () => {
-    authService.logout();
+  const logOut = useCallback(() => {
+    dispatch(logout())
     setShowInstructorBoard(false);
     setShowStudentBoard(false);
-    setCurrentUser(undefined);
-  };
+  },[]);
 
   return (
       <div>

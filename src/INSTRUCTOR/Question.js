@@ -1,19 +1,21 @@
 import axios from "axios";
 import {useEffect , useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllQuestions } from "../redux/slices/QuestionSlice";
 function Question(){
 
-    const [questions , setQuestions] = useState([]);
+    const {questionList,isLoading} = useSelector((state)=>state.question );
+    const dispatch = useDispatch();
 
      useEffect(() => {
+        dispatch(getAllQuestions());
 
-        async function getAllQuestions(){
-           const value = await axios.get(`http://localhost:8002/questions/allQuestions`);
-            setQuestions(value.data);
-        }
-        getAllQuestions();
      } ,[])
-
-
+     if(isLoading){
+        return(
+            <div>Loading....</div>
+        )
+     }
 
       return (
           <>
@@ -37,8 +39,7 @@ function Question(){
                      </thead>
                      <tbody>
                          {
-                             questions.map((data,i) => {
-                                console.log(data);
+                             questionList.map((data,i) => {
                                 return(
                                     <tr key={i}>
                                         <td>{data.qname}</td>

@@ -1,5 +1,4 @@
 import axios from "axios";
-//import { get } from "immer/dist/internal";
 import React, { useState, useEffect } from 'react';
 import { useParams ,NavLink, Link, useNavigate } from 'react-router-dom';
 import authService from "../services/AuthenticationService";
@@ -33,14 +32,14 @@ function InstructorBoard(props) {
             {
                 allExam.map((data, i) => {
                     return (
-                        <div className="card m-2" key={i}>
-                            <div className="card card-header align-items-center"> <span><h3>{data.examName}</h3></span> </div>
-                            <div className=" ms-2"> <span><b>Exam ID : </b>{data.id}</span> </div>
-                            <div className=" ms-2"> <span><b>Subject : </b>{data.subject.name}</span> </div>
-                            <div className=" ms-2"> <span><b>Exam Description : </b>{data.desc}</span> </div>
-                            <div className=" ms-2"><span><b>Date : </b>{data.date}</span> </div>
+                        <div className="card m-2" style={{"background-color":"transparent"}} key={i}>
+                            <div className="card card-header align-items-center" style={{"background-color":"transparent"}}> <span><h3>{data.examName}</h3></span> </div>
+                            <div className=" ms-2" style={{"background-color":"transparent"}}> <span><b>Exam ID : </b>{data.id}</span> </div>
+                            <div className=" ms-2" style={{"background-color":"transparent"}}> <span><b>Subject : </b>{data.subject.name}</span> </div>
+                            <div className=" ms-2" style={{"background-color":"transparent"}}> <span><b>Exam Description : </b>{data.desc}</span> </div>
+                            <div className=" ms-2" style={{"background-color":"transparent"}}><span><b>Date : </b>{data.date}</span> </div>
             
-                            <div className="card card-footer align-items-center">
+                            <div className="card card-footer align-items-center" style={{"background-color":"transparent"}}>
                               <Link to={`/allExam`}>
                                  <button className="btn btn-info">Details</button>
                                </Link>
@@ -50,7 +49,6 @@ function InstructorBoard(props) {
 
                 })
             }
-            {/* <button className="btn btn-outline-primary" onClick={goBack}>Go Back</button> */}
         </>
     );
 }

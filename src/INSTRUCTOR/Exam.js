@@ -8,6 +8,9 @@ import Select from "react-validation/build/select"
 
 import { Link, NavLink } from "react-router-dom";
 import authService from "../authentication/services/AuthenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllSubjects } from "../redux/slices/SubjectSlice";
+import { addExam, getExamsForUser } from "../redux/slices/examSlice";
 
 const required = (value) => {
     if (!value) {
@@ -21,7 +24,6 @@ const required = (value) => {
 
 function Exam() {
 
-    //  ---------------------- add Exam & close buttton working  -------------------------------------
     const [display, setDisplay] = useState({
         display: "none"
     });
@@ -29,8 +31,10 @@ function Exam() {
     const form = useRef();
     const checkBtn = useRef();
 
-    //   const[touch,setTouch] = useState(false);
-    //   const [name,setName] = useState("");
+
+    const {subjectList: subjects} = useSelector((state)=>state.subject)
+    console.log(subjects);
+
 
     function handleAddExam() {
         setDisplay({ display: "block" });
@@ -40,31 +44,28 @@ function Exam() {
         setDisplay({ display: "none" });
     }
 
-    // --------------- Fetching all Exam from db.json file-------------------------
-
     const [exams, setExams] = useState([]);
-    const user = authService.getCurrentUser();
-    const [subjects, setSubjects] = useState([]);
+    const {user} = useSelector((state)=>state.auth);
+    //const [subjects, setSubjects] = useState([]);
+    const dispatch = useDispatch();
     useEffect(() => {
-        async function getSubjects() {
-            let val = await axios.get(`http://localhost:8002/subjects/allSubjects`);
-            setSubjects(val.data);
-        }
-        getSubjects();
+            // let val = await axios.get(`http://localhost:8002/subjects/allSubjects`);
+            // setSubjects(val.data);
+            dispatch(getAllSubjects());
+
     }, []);
+     
 
     useEffect(() => {
 
-        async function getAllExam() {
-            let value = await axios.get(`http://localhost:8002/exam/getByUserId/${user.id}`);
-            setExams(value.data);
+        function getAllExam() {
+            //let value = await axios.get(`http://localhost:8002/exam/getByUserId/${user.id}`);
+            dispatch(getExamsForUser(user.id)).unwrap().then(res=>{setExams(res)})
             //console.log(value.data[0].name);
         }
         getAllExam();
     }, []);
 
-
-    // --------------------Adding Exam And re-render Exam component-----------------
 
     var date = new Date();
     var d = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
@@ -91,7 +92,7 @@ function Exam() {
 
         form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
-            await axios.post(`http://localhost:8002/exam/addExam`, exam);
+            dispatch(addExam(exam));
             setStatus(true);
         }
     }
@@ -101,15 +102,15 @@ function Exam() {
 
     // ----------------------------Deleting Exam-----------------------------------------------
 
-    const [questions, setQuestions] = useState([]);
+    // const [questions, setQuestions] = useState([]);
 
-    useEffect(() => {
-        async function getAllQuestions() {
-            let value = await axios.get(`http://localhost:8002/questions/allQuestions`);
-            setQuestions(value.data);
-        }
-        getAllQuestions();
-    }, [])
+    // useEffect(() => {
+    //     async function getAllQuestions() {
+    //         let value = await axios.get(`http://localhost:8002/questions/allQuestions`);
+    //         setQuestions(value.data);
+    //     }
+    //     getAllQuestions();
+    // }, [])
 
 
     const [statusDeleteExam, setStatusDeleteExam] = useState();
@@ -131,9 +132,6 @@ function Exam() {
     if (status) return <Exam />
 
     if (statusDeleteExam) return <Exam />
-    //   const{touch,setTouch} = useState(false);
-    //   const [name,setName] = useState("");
-    //   const isValid = (name !== "");
 
     return (
         <>
@@ -191,19 +189,19 @@ function Exam() {
 
             <Form style={display} ref={form}>
                 <label htmlFor=""><b>Enter Exam name</b> </label>
-                <Input className="form-control" onChange={(e) => handleInput(e)} name="examName" type="text"
+                <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => handleInput(e)} name="examName" type="text"
                     placeholder="Enter Exam name" validations={[required]} />
 
 
                 <label htmlFor=""><b>Enter Subject Name </b></label>
-                <Select className="form-control" id="nameFiled" onChange={(e) => handleInput(e)} name="subjectName" type="text"
+                <Select className="form-control" style={{"background-color":"transparent"}} id="nameFiled" onChange={(e) => handleInput(e)} name="subjectName" type="text"
                     placeholder="Enter Subject Name" validations={[required]}>
                     <option selected>Select Subject</option>
                     {subjects.map((subject, id) => (<option key={id} value={subject.name}>{subject.name}</option>))}
                 </Select>
 
                 <label htmlFor=""><b>Enter Exam Description</b> </label>
-                <Input className="form-control" onChange={(e) => handleInput(e)} name="desc" type="text"
+                <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => handleInput(e)} name="desc" type="text"
                     placeholder="Enter Exam des" validations={[required]} />
 
                 <div>

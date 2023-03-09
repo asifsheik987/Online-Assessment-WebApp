@@ -4,6 +4,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import authService from "../services/AuthenticationService";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/AuthSlice";
 
 
 const required = (value) => {
@@ -26,6 +28,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -46,30 +49,47 @@ const Login = () => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      authService.login(username, password).then(
-        (response) => {
-          if(response.roles.includes("INSTRUCTOR")){
-            navigate("/instructor");
-            window.location.reload();
-          }
-          if(response.roles.includes("STUDENT")){
-            navigate("/student");
-            window.location.reload();
-          }
-         
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          setLoading(false);
-          setMessage("Invalid UserName or Password!!!");
+      dispatch(login({username,password}))
+      .unwrap()
+      .then((response)=>{
+        console.log(response.user.roles);
+        if(response.user.roles.includes("INSTRUCTOR")){
+          navigate("/instructor");
+          window.location.reload();
         }
-      );
+        if(response.user.roles.includes("STUDENT")){
+          navigate("/student");
+          window.location.reload();
+        }
+      },
+      (error)=>{
+        setLoading(false);
+        setMessage("Invalid UserName or Password!!!");
+      });
+      // authService.login(username, password).then(
+      //   (response) => {
+      //     if(response.roles.includes("INSTRUCTOR")){
+      //       navigate("/instructor");
+      //       window.location.reload();
+      //     }
+      //     if(response.roles.includes("STUDENT")){
+      //       navigate("/student");
+      //       window.location.reload();
+      //     }
+         
+      //   },
+      //   (error) => {
+      //     // const resMessage =
+      //     //   (error.response &&
+      //     //     error.response.data &&
+      //     //     error.response.data.message) ||
+      //     //   error.message ||
+      //     //   error.toString();
+
+      //     setLoading(false);
+      //     setMessage("Invalid UserName or Password!!!");
+      //   }
+      // );
     } else {
       setLoading(false);
     }
