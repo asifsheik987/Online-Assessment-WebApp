@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class RoleServiceImpl implements RoleService{
 	public Optional<Role> findByName(Role_Type name) {
 		// TODO Auto-generated method stub
 		return repo.findByName(name);
+	}
+
+	@Override
+	public List<Role> getRoles() {
+		// TODO Auto-generated method stub
+		return repo.findAll();
 	}
 
 }

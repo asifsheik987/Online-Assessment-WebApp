@@ -85,6 +85,7 @@ public class AuthController {
         }
 
         // Create new user's account
+        System.out.println(signUpRequest);
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
@@ -98,18 +99,20 @@ public class AuthController {
             roles.add(userRole);
         } else {
             roleString.forEach(role -> {
+            	System.out.println(role);
+            	System.out.println(roleService.getRoles());
             	
             	switch (role) {
                 case "INSTRUCTOR":
-                    Role insRole = roleService.findByName(Role_Type.INSTRUCTOR)
-                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    Role insRole = roleService.findByName(Role_Type.INSTRUCTOR).get();
+//                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(insRole);
 
                     break;
                
                 default:
-                    Role studentRole = roleService.findByName(Role_Type.STUDENT)
-                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    Role studentRole = roleService.findByName(Role_Type.STUDENT).get();
+                            //.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(studentRole);
             }
             });
