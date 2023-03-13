@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.exception.EmptyInputException;
 import com.example.exception.ExceptionHandler;
 import com.example.model.Subject;
 import com.example.service.SubjectService;
@@ -37,7 +36,7 @@ public class SubjectController {
 			List<Subject> subjects = service.getAllSubjects();
 			return ResponseEntity.status(HttpStatus.OK).body(subjects);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -48,10 +47,10 @@ public class SubjectController {
 			Subject Subject_added = service.addNewSubject(subject);
 			return ResponseEntity.status(HttpStatus.CREATED).body(Subject_added);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		} catch (Exception e) {
-			ExceptionHandler ex = new ExceptionHandler("605", "Error in Controller!!!");
+			ExceptionHandler ex = new ExceptionHandler("Error in Controller!!!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -62,7 +61,7 @@ public class SubjectController {
 			service.deleteSubjectById(id);
 			return ResponseEntity.status(HttpStatus.OK).body("1 is deleted");
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -73,7 +72,7 @@ public class SubjectController {
 			Subject subject = service.getSubjectByName(name);
 			return ResponseEntity.status(HttpStatus.OK).body(subject);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}

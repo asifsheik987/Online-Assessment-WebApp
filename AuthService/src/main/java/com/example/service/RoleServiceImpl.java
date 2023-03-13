@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.entity.Role;
-import com.example.entity.Role_Type;
+import com.example.model.Role;
+import com.example.model.Role_Type;
 import com.example.repository.RoleRepository;
 
 @Service

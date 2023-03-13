@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.NewQuizRequest;
-import com.example.exception.EmptyInputException;
 import com.example.exception.ExceptionHandler;
 import com.example.model.Exam;
 import com.example.model.Subject;
@@ -39,7 +38,7 @@ public class ExamController {
 			List<Exam> exams = service.getAllExam();
 			return ResponseEntity.status(HttpStatus.OK).body(exams);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -59,10 +58,10 @@ public class ExamController {
 			Exam examCreated = service.addNewExam(exam);
 			return ResponseEntity.status(HttpStatus.CREATED).body(examCreated);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		} catch (Exception e) {
-			ExceptionHandler ex = new ExceptionHandler("605", "Error in exam controller!!!");
+			ExceptionHandler ex = new ExceptionHandler("Error in exam controller!!!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -73,7 +72,7 @@ public class ExamController {
 			Exam exam = service.getParticularExam(id);
 			return ResponseEntity.status(HttpStatus.OK).body(exam);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 
@@ -85,7 +84,7 @@ public class ExamController {
 			service.deleteExamById(id);
 			return ResponseEntity.status(HttpStatus.OK).body("1 Exam deleted");
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -96,7 +95,7 @@ public class ExamController {
 			List<Exam> exams = service.getBySubjectName(subjectName);
 			return ResponseEntity.ok(exams);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -107,7 +106,7 @@ public class ExamController {
 			List<Exam> exams = service.getByUserId(userId);
 			return ResponseEntity.ok(exams);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}

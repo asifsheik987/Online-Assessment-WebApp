@@ -21,23 +21,23 @@ public class SubjectServiceImpl implements SubjectService {
 		try {
 			List<Subject> subjects = repo.findAll();
 			if (subjects.isEmpty())
-				throw new ExceptionHandler("601", "ExamList is Empty!!!");
+				throw new ExceptionHandler("ExamList is Empty!!!");
 			return subjects;
 		} catch (Exception e) {
-			throw new ExceptionHandler("603", "Error in subject service!!!");
+			throw new ExceptionHandler("Error in subject service!!!");
 		}
 	}
 
 	@Override
 	public Subject addNewSubject(Subject subject) {
 		if (subject.getName().isEmpty() || subject.getName().length() == 0)
-			throw new ExceptionHandler("601", "Subject name cannot be empty!!!");
+			throw new ExceptionHandler("Subject name cannot be empty!!!");
 		try {
 			return repo.save(subject);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "subject cannot be null!!! " + e.getMessage());
+			throw new ExceptionHandler("subject cannot be null!!! " + e.getMessage());
 		} catch (Exception e) {
-			throw new ExceptionHandler("603", "Error in subject service!!!");
+			throw new ExceptionHandler("Error in subject service!!!");
 		}
 	}
 
@@ -46,7 +46,7 @@ public class SubjectServiceImpl implements SubjectService {
 		try {
 			repo.deleteById(id);
 		} catch (Exception e) {
-			throw new ExceptionHandler("602", "Give valid Id !! " + e.getMessage());
+			throw new ExceptionHandler("Give valid Id !! " + e.getMessage());
 		}
 	}
 
@@ -55,9 +55,9 @@ public class SubjectServiceImpl implements SubjectService {
 		try {
 			return repo.getByName(name);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "Name not found !!!");
+			throw new ExceptionHandler("Name not found !!!");
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "subject name does not Exist!!! " + e.getMessage());
+			throw new ExceptionHandler("subject name does not Exist!!! " + e.getMessage());
 		}
 	}
 

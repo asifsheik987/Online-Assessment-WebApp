@@ -20,23 +20,23 @@ public class QuestionServiceImpl implements QuestionService {
 		try {
 			List<Question> questions = repo.findAll();
 			if (questions.isEmpty())
-				throw new ExceptionHandler("601", "Question List is Empty!!!");
+				throw new ExceptionHandler("Question List is Empty!!!");
 			return questions;
 		} catch (Exception e) {
-			throw new ExceptionHandler("603", "Error in Question service!!!");
+			throw new ExceptionHandler("Error in Question service!!!");
 		}
 	}
 
 	@Override
 	public Question addNewQuestion(Question question) {
 		if (question.getQname().isEmpty() || question.getExam().isEmpty() || question.getSubject().equals(null))
-			throw new ExceptionHandler("601", "Question fields cannot be Empty ");
+			throw new ExceptionHandler("Question fields cannot be Empty ");
 		try {
 			return repo.save(question);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "Question fields are null and " + e.getMessage());
+			throw new ExceptionHandler("Question fields are null and " + e.getMessage());
 		} catch (Exception e) {
-			throw new ExceptionHandler("603", "Error in Question Service Layer!!!");
+			throw new ExceptionHandler("Error in Question Service Layer!!!");
 		}
 	}
 
@@ -45,9 +45,9 @@ public class QuestionServiceImpl implements QuestionService {
 		try {
 			return repo.findByExamId(id);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "Exam Id not found!!!! " + e.getMessage());
+			throw new ExceptionHandler("Exam Id not found!!!! " + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "Exam Id does not Exist!!! " + e.getMessage());
+			throw new ExceptionHandler("Exam Id does not Exist!!! " + e.getMessage());
 		}
 	}
 
@@ -63,7 +63,7 @@ public class QuestionServiceImpl implements QuestionService {
 		try {
 			repo.deleteById(id);
 		} catch (Exception e) {
-			throw new ExceptionHandler("602", "Give valid question Id " + e.getMessage());
+			throw new ExceptionHandler("Give valid question Id " + e.getMessage());
 		}
 
 	}
@@ -73,9 +73,9 @@ public class QuestionServiceImpl implements QuestionService {
 		try {
 			return repo.findBySubject(subjectName);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "Subject name not Found!!! " + e.getMessage());
+			throw new ExceptionHandler("Subject name not Found!!! " + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "Subject Name doesnot Exist!!!" + e.getMessage());
+			throw new ExceptionHandler("Subject Name doesnot Exist!!!" + e.getMessage());
 		}
 	}
 
@@ -84,9 +84,9 @@ public class QuestionServiceImpl implements QuestionService {
 		try {
 			return repo.getQuestion(examId, questionId);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "arguments not found!!! " + e.getMessage());
+			throw new ExceptionHandler("arguments not found!!! " + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "arguments does not exist!!! " + e.getMessage());
+			throw new ExceptionHandler("arguments does not exist!!! " + e.getMessage());
 		}
 	}
 

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.QuestionRequest;
-import com.example.exception.EmptyInputException;
 import com.example.exception.ExceptionHandler;
 import com.example.model.Exam;
 import com.example.model.Question;
@@ -48,7 +47,7 @@ public class QuestionController {
 		List<Question> questions = service.getAllQuestion();
 		return ResponseEntity.status(HttpStatus.OK).body(questions);
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -73,10 +72,10 @@ public class QuestionController {
 		Question Question_added = service.addNewQuestion(question);
 		return ResponseEntity.status(HttpStatus.CREATED).body(Question_added);
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}catch(Exception e) {
-			ExceptionHandler ex = new ExceptionHandler("605","Error in Question Controller!!!");
+			ExceptionHandler ex = new ExceptionHandler("Error in Question Controller!!!");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -87,7 +86,7 @@ public class QuestionController {
 		List<Question> questions = service.getAllQuestionForExam(id);
 		return ResponseEntity.status(HttpStatus.OK).body(questions);
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 
@@ -106,7 +105,7 @@ public class QuestionController {
 		service.deleteQuestion(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Question Deleted");
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -117,7 +116,7 @@ public class QuestionController {
 		List<Question> questions = service.getAllQuestionsBySubject(subjectName);
 		return ResponseEntity.status(HttpStatus.OK).body(questions);
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -137,7 +136,7 @@ public class QuestionController {
 		Question questionupdated = service.addNewQuestion(question);
 		return ResponseEntity.status(HttpStatus.OK).body(questionupdated);
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 
@@ -163,7 +162,7 @@ public class QuestionController {
 			return ResponseEntity.status(HttpStatus.OK).body("Question Deleted");
 		}
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 
@@ -187,7 +186,7 @@ public class QuestionController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body("Questions related exam removed");
 		}catch(ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(),e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 

@@ -1,9 +1,10 @@
 package com.example.repository;
 
-import com.example.entity.Role;
-import com.example.entity.Role_Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.example.model.Role;
+import com.example.model.Role_Type;
 
 import java.util.Optional;
 @Repository

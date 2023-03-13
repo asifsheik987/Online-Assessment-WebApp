@@ -32,7 +32,7 @@ public class ResultController {
 			List<Result> results = service.getAllResult();
 			return ResponseEntity.status(HttpStatus.OK).body(results);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -45,10 +45,10 @@ public class ResultController {
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(addedResult);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		} catch (Exception e) {
-			ExceptionHandler ex = new ExceptionHandler("605", "Error in Result Controller");
+			ExceptionHandler ex = new ExceptionHandler( "Error in Result Controller");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -60,7 +60,7 @@ public class ResultController {
 
 			return ResponseEntity.status(HttpStatus.OK).body(results);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -71,7 +71,7 @@ public class ResultController {
 			service.deleteResultinExam(examId);
 			return ResponseEntity.status(HttpStatus.OK).body("1 Result Deleted");
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorCode(), e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}

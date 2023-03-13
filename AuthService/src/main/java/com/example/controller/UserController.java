@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.User;
+import com.example.exception.ExceptionHandler;
+import com.example.model.User;
 import com.example.security.services.UserDetailsServiceImpl;
 import com.example.service.UserServiceImpl;
 
@@ -45,16 +46,26 @@ public class UserController {
     
     @GetMapping("/getUser/{userName}")
     public ResponseEntity<?> getUserByUserName(@PathVariable(name = "userName") String name){
+    	try {
     	
     	User user = service.getUserByUserName(name);
     	
     	return ResponseEntity.status(HttpStatus.OK).body(user);
+    	}catch(ExceptionHandler e) {
+    		ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+    	}
     	
     }
     @GetMapping("/allStudents")
     public ResponseEntity<?> getAllStudents(){
+    	try {
     	List<User> students = service.getStudents();
     	return ResponseEntity.status(HttpStatus.OK).body(students);
+    	}catch(ExceptionHandler e) {
+    		ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+    	}
     }
 
 }

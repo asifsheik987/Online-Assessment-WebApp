@@ -21,11 +21,11 @@ public class ResultServiceImpl implements ResultService {
 		try {
 			List<Result> results = repo.findAll();
 			if (results.isEmpty())
-				throw new ExceptionHandler("601", "Result List is Empty!!!");
+				throw new ExceptionHandler( "Result List is Empty!!!");
 
 			return results;
 		} catch (Exception e) {
-			throw new ExceptionHandler("603", "Error in Result Service!!!");
+			throw new ExceptionHandler("Error in Result Service!!!");
 		}
 	}
 
@@ -33,13 +33,13 @@ public class ResultServiceImpl implements ResultService {
 	public Result addNewResult(Result result) {
 		if (result.getScore().isEmpty() || result.getStatus().isEmpty() || result.getSubject().equals(null)
 				|| result.getUser().equals(null) || result.getExam().equals(null))
-			throw new ExceptionHandler("601", "Result fields cannot be Empty!!!");
+			throw new ExceptionHandler("Result fields cannot be Empty!!!");
 		try {
 			return repo.save(result);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "All exam fields are null!! " + e.getMessage());
+			throw new ExceptionHandler("All result fields are null!! " + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("603", "Error in Result Service!!! ");
+			throw new ExceptionHandler("Error in Result Service!!! ");
 		}
 	}
 
@@ -48,9 +48,9 @@ public class ResultServiceImpl implements ResultService {
 		try {
 			return repo.getByUserName(userName);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "userName not found!!! " + e.getMessage());
+			throw new ExceptionHandler("userName not found!!! " + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "userName doesnot exist!!! " + e.getMessage());
+			throw new ExceptionHandler("userName doesnot exist!!! " + e.getMessage());
 		}
 	}
 
@@ -59,7 +59,7 @@ public class ResultServiceImpl implements ResultService {
 		try {
 			repo.delByExamId(examId);
 		} catch (Exception e) {
-			throw new ExceptionHandler("602", "Give valid Id!!! " + e.getMessage());
+			throw new ExceptionHandler("Give valid Id!!! " + e.getMessage());
 		}
 	}
 

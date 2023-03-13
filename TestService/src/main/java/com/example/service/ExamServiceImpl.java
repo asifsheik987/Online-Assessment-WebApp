@@ -20,10 +20,10 @@ public class ExamServiceImpl implements ExamService {
 		try {
 			List<Exam> allExams = repo.findAll();
 			if (allExams.isEmpty())
-				throw new ExceptionHandler("601", "Exam List is Empty!!!");
+				throw new ExceptionHandler("Exam List is Empty!!!");
 			return allExams;
 		} catch (Exception e) {
-			throw new ExceptionHandler("603", "Error in exam Service!!!!");
+			throw new ExceptionHandler("Error in exam Service!!!!");
 
 		}
 	}
@@ -34,23 +34,23 @@ public class ExamServiceImpl implements ExamService {
 			Exam exam = repo.findById(id).get();
 			return exam;
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "Id not found " + e.getMessage());
+			throw new ExceptionHandler("Id not found " + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "Exam id doesnot Exits!!!");
+			throw new ExceptionHandler( "Exam id doesnot Exits!!!");
 		}
 	}
 
 	@Override
 	public Exam addNewExam(Exam exam) {
 		if (exam.getExamName().isEmpty() || exam.getSubject().equals(null) || exam.getExamName().length() == 0) {
-			throw new ExceptionHandler("601", "Exam fields cannot be Empty!!!");
+			throw new ExceptionHandler( "Exam fields cannot be Empty!!!");
 		}
 		try {
 			return repo.save(exam);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "Exam fields are null and" + e.getMessage());
+			throw new ExceptionHandler("Exam fields are null and" + e.getMessage());
 		} catch (Exception e) {
-			throw new ExceptionHandler("603", "Error in Exam Service Layer!!!");
+			throw new ExceptionHandler("Error in Exam Service Layer!!!");
 		}
 	}
 
@@ -59,7 +59,7 @@ public class ExamServiceImpl implements ExamService {
 		try {
 			repo.deleteById(id);
 		} catch (Exception e) {
-			throw new ExceptionHandler("602", "Give valid Id and " + e.getMessage());
+			throw new ExceptionHandler("Give valid Id and " + e.getMessage());
 		}
 	}
 
@@ -68,9 +68,9 @@ public class ExamServiceImpl implements ExamService {
 		try {
 			return repo.getBySubjectName(subjectName);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "Exam name not found!!!" + e.getMessage());
+			throw new ExceptionHandler("Exam name not found!!!" + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "Subject name doesnot exist!!!" + e.getMessage());
+			throw new ExceptionHandler("Exam name doesnot exist!!!" + e.getMessage());
 		}
 	}
 
@@ -79,9 +79,9 @@ public class ExamServiceImpl implements ExamService {
 		try {
 			return repo.getByUserId(userId);
 		} catch (IllegalArgumentException e) {
-			throw new ExceptionHandler("602", "userId not found" + e.getMessage());
+			throw new ExceptionHandler("userId not found" + e.getMessage());
 		} catch (NoSuchElementException e) {
-			throw new ExceptionHandler("604", "UserID does not exist!!!" + e.getMessage());
+			throw new ExceptionHandler( "UserID does not exist!!!" + e.getMessage());
 		}
 	}
 

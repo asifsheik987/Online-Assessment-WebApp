@@ -27,12 +27,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		// TODO Auto-generated method stub
 		return new ResponseEntity<Object>("Please give valid input",HttpStatus.BAD_REQUEST);
 	}
-	
-	@ExceptionHandler(EmptyInputException.class)
-	public ResponseEntity<String> handleEmptyInput(EmptyInputException ex){
-		
-		return new ResponseEntity<String>("Input Field is empty,please Look into it",HttpStatus.BAD_REQUEST);
-		
-	}
 
 }

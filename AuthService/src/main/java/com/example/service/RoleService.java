@@ -3,8 +3,8 @@ package com.example.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.entity.Role;
-import com.example.entity.Role_Type;
+import com.example.model.Role;
+import com.example.model.Role_Type;
 
 public interface RoleService {
 
