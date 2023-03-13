@@ -2,18 +2,23 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllSubjects } from "../redux/slices/SubjectSlice";
 
 
 function StudentSubject() {
 
-    const [allSubject, setAllSubject] = useState([]);
+    //const [allSubject, setAllSubject] = useState([]);
+    const allSubject = useSelector(state=>state.subject.subjectList);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        async function getAllSubject() {
-            let value = await axios.get(`http://localhost:8002/subjects/allSubjects`);
-            setAllSubject(value.data);
-        }
-        getAllSubject();
+        // async function getAllSubject() {
+        //     let value = await axios.get(`http://localhost:8002/subjects/allSubjects`);
+        //     setAllSubject(value.data);
+        // }
+        // getAllSubject();
+        dispatch(getAllSubjects());
     }, [])
 
 

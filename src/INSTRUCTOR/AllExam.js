@@ -11,28 +11,31 @@ import { getAllExams } from "../redux/slices/examSlice";
 function AllExam() {
 
 
-    const [exams, setExams] = useState([]);
-    const dispatch  = useDispatch();
+    const { examList } = useSelector(state => state.exam);
+    const dispatch = useDispatch();
     // const {user} = useSelector((state)=>state.auth);
     // console.log(user);
-    dispatch(getAllExams()).unwrap().then(
-        (data)=>{
-            setExams(data);
-        }
-    );
+    useEffect(() => {
+        dispatch(getAllExams())
+    }, []);
+    // dispatch(getAllExams()).unwrap().then(
+    //     (data)=>{
+    //         setExams(data);
+    //     }
+    // );
 
 
     // useEffect(() => {
-        
+
     //     async function getAllExam() {
-            
+
     //         let value = await axios.get(`http://localhost:8002/exam/allExams`);
     //         setExams(value.data);
     //         //console.log(value.data[0].name);
     //     }
     //     getAllExam();
     // }, []);
-    
+
 
 
     // const [questions, setQuestions] = useState([]);
@@ -65,7 +68,7 @@ function AllExam() {
                     </thead>
                     <tbody>
                         {
-                            exams.map((data, i) => {
+                            examList.map((data, i) => {
                                 return (
                                     <tr key={i}>
                                         <td>{data.examName}</td>

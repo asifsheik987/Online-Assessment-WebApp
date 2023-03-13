@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthenticationService from "../services/AuthenticationService"
-import InstructorBoard from './InstructorBoard';
-import StudentBoard from './StudentBoard';
 function Home(props) {
   const [content, setContent] = useState("");
-  const [user, setUser] = useState(null);
+  const user = useSelector(state=>state.auth.user);
   const navigate = useNavigate();
-  //let user = null;
 
-
-  useEffect(() => {
-    setUser(AuthenticationService.getCurrentUser());
-  }, []);
   if (user == null) {
     return (
       <div className="card" style={{"background-color":"transparent"}}>

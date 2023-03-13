@@ -1,9 +1,5 @@
-
-
-   import axios from "axios";
-
-   import {useEffect , useState} from "react";
-import { useDispatch } from "react-redux";
+ import {useEffect , useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
    import { useNavigate, useParams} from "react-router-dom";
 import authService from "../authentication/services/AuthenticationService";
 import { getExamById } from "../redux/slices/examSlice";
@@ -13,6 +9,7 @@ import { getExamById } from "../redux/slices/examSlice";
         
         const {id} = useParams();
         const dispatch = useDispatch();
+        const {selectedExam} = useSelector(state=>state.exam);
 
         const [exam  , setExam] = useState({
             examName:"",
@@ -23,15 +20,9 @@ import { getExamById } from "../redux/slices/examSlice";
         });
 
         useEffect(() => {
-          
-             async function getExamDetails(){
-                //const value = await axios.get(`http://localhost:8002/exam/getExam/${id}`);
-                dispatch(getExamById(id)).unwrap().then(response=>{
-                  setExam(response);
+                dispatch(getExamById(id)).then(response=>{
+                  setExam(response.payload);
                 })
-                //setExam(value.data);
-             }
-             getExamDetails();
         },[id])
 
    // -------------------------Go back function---------------------------------------

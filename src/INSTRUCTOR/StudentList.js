@@ -3,19 +3,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllStudents } from "../redux/slices/AuthSlice";
 
 function StudentList() {
 
-  const [students, setStudents] = useState([]);
+  const students = useSelector(state => state.auth.userList);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    async function getAllStudent() {
-      let value = await axios.get(`http://localhost:8001/api/testUser/allStudents`);
-      setStudents(value.data);
-    }
-    getAllStudent();
+    dispatch(getAllStudents());
+
   }, [])
   const handleResult = (e, username) => {
     e.preventDefault();

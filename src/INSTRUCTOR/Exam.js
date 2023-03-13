@@ -33,7 +33,7 @@ function Exam() {
 
 
     const {subjectList: subjects} = useSelector((state)=>state.subject)
-    console.log(subjects);
+    //console.log(subjects);
 
 
     function handleAddExam() {
@@ -43,8 +43,8 @@ function Exam() {
     function handleCloseExam() {
         setDisplay({ display: "none" });
     }
-
-    const [exams, setExams] = useState([]);
+    const exams = useSelector(state=>state.exam.examList);
+    //const [exams, setExams] = useState([]);
     const {user} = useSelector((state)=>state.auth);
     //const [subjects, setSubjects] = useState([]);
     const dispatch = useDispatch();
@@ -57,13 +57,9 @@ function Exam() {
      
 
     useEffect(() => {
-
-        function getAllExam() {
             //let value = await axios.get(`http://localhost:8002/exam/getByUserId/${user.id}`);
-            dispatch(getExamsForUser(user.id)).unwrap().then(res=>{setExams(res)})
+            dispatch(getExamsForUser(user.id))//.unwrap().then(res=>{setExams(res)})
             //console.log(value.data[0].name);
-        }
-        getAllExam();
     }, []);
 
 
@@ -140,7 +136,7 @@ function Exam() {
             </div>
 
             <div >
-                <table className="table table-bordered">
+                <table className="table table-bordered table-striped table-hover text-center">
                     <thead >
                         <tr>
                             <th>Exam Name</th>
@@ -161,18 +157,18 @@ function Exam() {
                                         <td>{data.subject.name}</td>
                                         <td>
                                             <Link to={`/examDetails/${data.id}`}>
-                                                <button className="btn btn-outline-primary m-1">Details</button>
+                                                <button className="btn btn-sm btn-outline-primary mx-1">Details</button>
                                             </Link>
 
                                             <NavLink to={`/viewQuestion/${data.id}/${data.user.id}`}>
-                                                <button className="btn btn-outline-primary m-1">View Questions</button>
+                                                <button className="btn btn-sm btn-outline-primary mx-1">View Questions</button>
                                             </NavLink>
 
                                             <NavLink to={`/addQuestionFromBank/${data.id}/${data.subject.name}`}>
-                                                <button className="btn btn-outline-primary m-1">Add Question</button>
+                                                <button className="btn btn-sm btn-outline-primary mx-1">Add Question</button>
                                             </NavLink>
 
-                                            <button className="btn btn-outline-danger m-1" onClick={() => deleteExam(data.id)}>Delete</button>
+                                            <button className="btn btn-block btn-sm btn-outline-danger mx-1" onClick={() => deleteExam(data.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 );

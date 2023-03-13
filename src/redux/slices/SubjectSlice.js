@@ -13,7 +13,6 @@ export const addSubject = createAsyncThunk(
     "subject/addSubject",
     async (subject)=>{
         const response = await axios.post(`http://localhost:8002/subjects/addSubject`, subject);
-        console.log(response);
         return response.data;
        
     }
@@ -27,7 +26,8 @@ export const deleteSubject = createAsyncThunk(
 );
 
 const initialState = {
-    subjectList:[]
+    subjectList:[],
+    selectedSubject:[]
 }
 
 const subjectSlice = createSlice({
@@ -41,10 +41,10 @@ const subjectSlice = createSlice({
 
         })
         builder.addCase(addSubject.fulfilled,(state,action)=>{
-            state.subjectList.push(action.payload);
+            state.selectedSubject = action.payload;
         })
         builder.addCase(deleteSubject.fulfilled,(state,action)=>{
-            console.log(action.payload);
+            //console.log(action.payload);
             state.subjectList=state.subjectList.filter((subject)=>(subject.id)!==action.payload);
         })
 

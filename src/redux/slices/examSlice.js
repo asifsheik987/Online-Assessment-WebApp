@@ -28,9 +28,16 @@ export const getExamById = createAsyncThunk(
         return response.data;
     }
 )
+export const getExamBySubject = createAsyncThunk(
+    "exam/getExamBySubject",
+    async (subjectName)=>{
+        const response = await axios.get(`http://localhost:8002/exam/getExamOnSubjectName/${subjectName}`);
+        return response.data;
+    }
+)
 const initialState = {
     examList:[],
-    selectedExam:{}
+    selectedExam:[]
 }
 const examSlice = createSlice({
     name:"exam",
@@ -45,10 +52,13 @@ const examSlice = createSlice({
         builder.addCase(addExam.fulfilled,(state,action)=>{
             state.examList.push(action.payload);
         })
-        // builder.addCase(getExamsForUser.fulfilled,(state,action)=>{
-        //     state.examList = action.payload;
-        // })
+        builder.addCase(getExamsForUser.fulfilled,(state,action)=>{
+            state.examList = action.payload;
+        })
         builder.addCase(getExamById.fulfilled,(state,action)=>{
+            state.selectedExam = action.payload;
+        })
+        builder.addCase(getExamBySubject.fulfilled,(state,action)=>{
             state.selectedExam = action.payload;
         })
     }

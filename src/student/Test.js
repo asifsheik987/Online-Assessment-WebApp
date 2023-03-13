@@ -1,25 +1,21 @@
-
-import axios from 'axios';
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useNavigate, useParams } from "react-router-dom";
+import { getQuestionsForExam } from '../redux/slices/QuestionSlice';
+import { addResult } from '../redux/slices/ResultSlice';
 
 function Test() {
 
     // ---------------------------------------------------------
     let { subjectName, examId, subjectId } = useParams();
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.auth.user);
 
-    const [allQuestions, setAllQuestions] = useState([]);
-
-
+    const allQuestions = useSelector(state => state.question.selectedQ);
 
     useEffect(() => {
-        async function getAllQuestions() {
-            let value = await axios.get(`http://localhost:8002/questions/getQuestionsForExam/${examId}`);
-            setAllQuestions(value.data);
-            //console.log(value.data);
-        }
-        getAllQuestions();
+        dispatch(getQuestionsForExam(examId));
     }, [examId]);
 
     // ---------------------------------------------------------
@@ -89,7 +85,7 @@ function Test() {
         var date = new Date();
         var d = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
         var t = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        const user = JSON.parse(localStorage.getItem("user"));
+
 
         let data = {
             "status": status,
@@ -102,9 +98,7 @@ function Test() {
             "totalQuestion": count
         };
 
-        console.log(data);
-
-        await axios.post(`http://localhost:8002/result/addResult`, data);
+        dispatch(addResult(data));
         navigate(`/student/result/${user.username}`);
     }
 
@@ -120,27 +114,27 @@ function Test() {
                 allQuestions.map((data, index) => {
                     count++;
                     return (
-                        <div className='card m-2' key={index} style={{"background-color":"transparent"}}>
-                            <div className='card card-header' style={{"background-color":"transparent"}}> <span>{count}. {data.qname}</span> </div>
-                            <div className='form-check ' style={{"background-color":"transparent"}}>
+                        <div className='card m-2' key={index} style={{ "background-color": "transparent" }}>
+                            <div className='card card-header' style={{ "background-color": "transparent" }}> <span>{count}. {data.qname}</span> </div>
+                            <div className='form-check ' style={{ "background-color": "transparent" }}>
                                 <input className='form-check-input' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionOne}
                                     name={index} type="radio" />
                                 <label className='form-check-label' htmlFor="option1">{data.optionOne}</label>
                             </div>
 
-                            <div className='form-check' style={{"background-color":"transparent"}}>
+                            <div className='form-check' style={{ "background-color": "transparent" }}>
                                 <input className='form-check-input' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionTwo}
                                     name={index} type="radio" />
                                 <label className='form-check-label' htmlFor="option2"> {data.optionTwo}</label>
                             </div>
 
-                            <div className='form-check' style={{"background-color":"transparent"}}>
+                            <div className='form-check' style={{ "background-color": "transparent" }}>
                                 <input className='form-check-input' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionThree}
                                     name={index} type="radio" />
                                 <label className='form-check-label' htmlFor="option3">{data.optionThree}</label>
                             </div>
 
-                            <div className='form-check' style={{"background-color":"transparent"}}>
+                            <div className='form-check' style={{ "background-color": "transparent" }}>
                                 <input className='form-check-input' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionFour}
                                     name={index} type="radio" />
                                 <label className='form-check-label' htmlFor="option4">{data.optionFour}</label>

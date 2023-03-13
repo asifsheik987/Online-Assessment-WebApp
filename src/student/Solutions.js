@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { getQuestionsForExam } from '../redux/slices/QuestionSlice';
 
 function Solutions(props) {
 
     const { examId, examName } = useParams();
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = useSelector(state=>state.auth.user);
+    const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    const [allQuestions, setAllQuestions] = useState([]);
 
+    const allQuestions = useSelector(state=>state.question.selectedQ);
 
 
     useEffect(() => {
-        async function getAllQuestions() {
-            let value = await axios.get(`http://localhost:8002/questions/getQuestionsForExam/${examId}`);
-            setAllQuestions(value.data);
-            //console.log(value.data);
-        }
-        getAllQuestions();
+        dispatch(getQuestionsForExam(examId))
     }, [examId]);
 
     const handleGoBack = (e) => {

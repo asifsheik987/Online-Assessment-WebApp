@@ -1,33 +1,28 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, NavLink, Link, useNavigate } from 'react-router-dom';
 
 import authService from "../authentication/services/AuthenticationService";
+import { getExamBySubject } from "../redux/slices/examSlice";
+import{ getStudentResult } from "../redux/slices/ResultSlice"
 
 function StudentExam(props) {
 
     const { name } = useParams();
 
-    const [allExam, setAllExam] = useState([]);
+    const allExam = useSelector(state=>state.exam.selectedExam)
 
-    const [result, setResult] = useState([]);
+    const result = useSelector(state=>state.result.selectedResult);
 
-    const user = authService.getCurrentUser();
+    const user = useSelector(state=>state.auth.user);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        async function getAllExams() {
-            const value = await axios.get(`http://localhost:8002/exam/getExamOnSubjectName/${name}`);
-
-            setAllExam(value.data);
-        }
-        getAllExams();
+        dispatch(getExamBySubject(name));
     }, []);
     useEffect(() => {
-        async function getUserResults() {
-            const value = await axios.get(`http://localhost:8002/result/resultForStudent/${user.username}`);
-            setResult(value.data);
-        }
-        getUserResults();
+        dispatch(getStudentResult(user.username));
     }, [])
 
     const navigate = useNavigate();

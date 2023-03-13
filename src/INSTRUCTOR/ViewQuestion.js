@@ -5,11 +5,13 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import authService from "../authentication/services/AuthenticationService";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteQFromExam, deleteQuestn, getQuestionsForExam, updateQuestion } from "../redux/slices/QuestionSlice";
 
 function ViewQuestion() {
 
 
-
+    const dispatch = useDispatch();
     const [display, setDisplay] = useState({
         display: "none"
     });
@@ -24,18 +26,12 @@ function ViewQuestion() {
     }
 
     const { id, insId } = useParams();
-    console.log(parseInt(insId));
 
-
-    const [questions, setQuestions] = useState([]);
+    const questions = useSelector(state => state.question.selectedQ)
 
     useEffect(() => {
-        async function getAllQuestions() {
-            let value = await axios.get(`http://localhost:8002/questions/getQuestionsForExam/${id}`);
-            setQuestions(value.data);
-            //console.log(value.data);
-        }
-        getAllQuestions();
+
+        dispatch(getQuestionsForExam(id));
     }, [id])
 
 
@@ -58,7 +54,6 @@ function ViewQuestion() {
             ...updatedQ,
             [e.target.name]: e.target.value
         })
-        // console.log(updatedQ);
     }
 
 
@@ -67,12 +62,9 @@ function ViewQuestion() {
 
 
     // Id of current question clicked
-    const [qId, setQId] = useState();
-
-
+    const [questionId, setQuestionId] = useState(0);
     function setDataInInputField(questionId) {
-        setQId(questionId);
-
+        setQuestionId(questionId);
         for (let i = 0; i < questions.length; i++) {
             if (parseInt(questions[i].id) === parseInt(questionId)) {
                 setUpdatedQ(questions[i]);
@@ -84,15 +76,16 @@ function ViewQuestion() {
     const [check, setCheck] = useState();
 
 
-    async function updateQuestion() {
-        await axios.put(`http://localhost:8002/questions/question/${qId}`, updatedQ);
+    function updateQ() {
+        console.log(questionId, updatedQ)
+        dispatch(updateQuestion({ questionId, updatedQ }));
         setCheck(true);
     }
 
     // ----------------------------------------------------------------------------------------
 
     let navigate = useNavigate();
-    const user = authService.getCurrentUser();
+    const user = useSelector(state => state.auth.user);
     console.log(typeof (user.id))
     function handleGoBack() {
         if (user.id === parseInt(insId)) {
@@ -104,23 +97,23 @@ function ViewQuestion() {
     }
     // ----------------------------------------------------------------------------------------
 
-    const [d, setD] = useState();
+    //const [d, setD] = useState();
 
-    async function deleteQuestion(question) {
+    function deleteQuestion(question) {
         if (question.exam.length <= 1) {
-            await axios.delete(`http://localhost:8002/questions/deleteQuestion/${question.id}`);
-            setD(true);
+            dispatch(deleteQuestn(question.id));
+            setCheck(true);
         }
         else {
-            await axios.put(`http://localhost:8002/questions/deleteQuestionFromExam/${id}/${question.id}`);
-            setD(true);
+            dispatch(deleteQFromExam({ examId: id, questionId: question.id }))
+            setCheck(true);
         }
     }
 
 
     if (check) return <ViewQuestion />;
 
-    if (d) return <ViewQuestion />;
+    //if (d) return <ViewQuestion />;
 
 
 
@@ -226,7 +219,7 @@ function ViewQuestion() {
                     type="text" placeholder="Enter ExamLevel" />
 
                 <div>
-                    <button className="btn btn-outline-success m-1" onClick={updateQuestion} >Update Question</button>
+                    <button className="btn btn-outline-success m-1" onClick={updateQ} >Update Question</button>
                     <button className="btn btn-outline-primary m-1" onClick={handleClose} >Close</button>
                 </div>
             </div>

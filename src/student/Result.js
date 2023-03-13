@@ -1,23 +1,20 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { getStudentResult } from "../redux/slices/ResultSlice";
 
 
 function Result() {
 
-    const [results, setResults] = useState([]);
+    const results = useSelector(state=>state.result.resultList);
 
     const { username } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        async function getAllResults() {
-            let value = await axios.get(`http://localhost:8002/result/resultForStudent/${username}`)
-
-            setResults(value.data);
-            console.log(value.data);
-        }
-        getAllResults();
+        dispatch(getStudentResult(username));
     }, []);
 
     const handleGoBack = (e) => {

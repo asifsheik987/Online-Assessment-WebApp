@@ -32,20 +32,11 @@ function Subject() {
         setDisplay({ display: "none" });
     }
 
+    const {subjectList: subjects,isLoading} = useSelector(state => state.subject);
 
-    const [subjects, setSubjects] = useState([]);
     useEffect(() => {
-        dispatch(getAllSubjects()).unwrap().then((response)=>{
-            setSubjects(response);
-        })
+        dispatch(getAllSubjects());
 
-        // async function getAllSubject() {
-        //     dispatch(getAllSubject());
-        //     let value = await axios.get(`http://localhost:8002/subjects/allSubjects`);
-        //     setSubjects(value.data);
-        //     //console.log(value.data[0]);
-        // }
-        // getAllSubject();
     }, []);
 
 
@@ -65,24 +56,19 @@ function Subject() {
         form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
             dispatch(addSubject(subject));
-            //await axios.post(`http://localhost:8002/subjects/addSubject`, subject);
             setStatus(true);
         }
     }
 
     const [status, setStatus] = useState();
 
-        function removeSubject(id) {
-            //await axios.delete(`http://localhost:8002/subjects/deleteSubject/${id}`);
-            dispatch(deleteSubject(id));
-            setStatusDelete(true);
-        }
-    
+    function removeSubject(id) {
+        dispatch(deleteSubject(id));
+        setStatus(true);
+    }
+
 
     const [statusDelete, setStatusDelete] = useState();
-
-
-    if (statusDelete) return <Subject />;
 
     if (status) return <Subject />;
 
@@ -161,7 +147,7 @@ function Subject() {
 
                 <Form style={display} ref={form}>
                     <label htmlFor="">Enter Subject </label>
-                    <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => handleInput(e)} type="text" placeholder="Enter Subject name" validations={[required]} />
+                    <Input className="form-control" style={{ "background-color": "transparent" }} onChange={(e) => handleInput(e)} type="text" placeholder="Enter Subject name" validations={[required]} />
 
                     <div>
                         <button className="btn btn-outline-primary m-2" onClick={handleAddNewSubject}  >Add</button>

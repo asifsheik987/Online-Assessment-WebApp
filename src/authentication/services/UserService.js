@@ -28,11 +28,15 @@ const getInstructorBoard = ()=>{
         )
     });
 }
+const getAllStudents = ()=>{
+    return axios.get(`http://localhost:8001/api/testUser/allStudents`);
+}
 
 const userService = {
     getPublicContent,
     getInstructorBoard,
     getStudentBoard,
+    getAllStudents
   };
 
   export default userService;

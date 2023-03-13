@@ -1,27 +1,22 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { getStudentResult } from "../redux/slices/ResultSlice";
 
 
 function StudentResult() {
 
-    const [results, setResults] = useState([]);
-
+    const results = useSelector(state => state.result.selectedResult);
     const { username } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        async function getAllResults() {
-            let value = await axios.get(`http://localhost:8002/result/resultForStudent/${username}`)
-
-            setResults(value.data);
-            console.log(value.data);
-        }
-        getAllResults();
+        dispatch(getStudentResult(username));
     }, []);
 
     const handleGoBack = (e) => {
-        //e.preventDefault();
         navigate("/students");
     }
 
@@ -41,7 +36,6 @@ function StudentResult() {
                             <th>Result Status</th>
                             <th>Score</th>
                             <th>Total Marks</th>
-                            {/* <th>Actions</th>   */}
                         </tr>
                     </thead>
                     <tbody >
@@ -56,9 +50,7 @@ function StudentResult() {
                                         <td><b>{data.status}</b></td>
                                         <td>{data.score}</td>
                                         <td>{data.totalMarks}</td>
-                                        {/* <td>
-                                            <button className="btn btn-outline-info" onClick={(e)=>handleSolutions(e,data.exam.id,data.exam.examName)} >View Solutions</button>
-                                           </td> */}
+
                                     </tr>
                                 );
 
