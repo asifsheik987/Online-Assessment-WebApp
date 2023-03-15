@@ -77,7 +77,6 @@ function ViewQuestion() {
 
 
     function updateQ() {
-        console.log(questionId, updatedQ)
         dispatch(updateQuestion({ questionId, updatedQ }));
         setCheck(true);
     }

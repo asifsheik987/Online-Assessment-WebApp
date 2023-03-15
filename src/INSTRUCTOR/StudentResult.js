@@ -7,7 +7,7 @@ import { getStudentResult } from "../redux/slices/ResultSlice";
 
 function StudentResult() {
 
-    const results = useSelector(state => state.result.selectedResult);
+    const results = useSelector(state => state.result.resultList);
     const { username } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();

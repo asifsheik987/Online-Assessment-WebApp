@@ -115,11 +115,12 @@ function Test() {
                     count++;
                     return (
                         <div className='card m-2' key={index} style={{ "background-color": "transparent" }}>
-                            <div className='card card-header' style={{ "background-color": "transparent" }}> <span>{count}. {data.qname}</span> </div>
+                            <div className='card card-header bg-dark text-white' style={{ "background-color": "transparent"}}> <span>{count}. {data.qname}</span> </div>
+                            <div className="card card-body bg-secondary text-white">
                             <div className='form-check ' style={{ "background-color": "transparent" }}>
                                 <input className='form-check-input' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionOne}
                                     name={index} type="radio" />
-                                <label className='form-check-label' htmlFor="option1">{data.optionOne}</label>
+                                <label className='form-check-label' htmlFor="option1"> {data.optionOne}</label>
                             </div>
 
                             <div className='form-check' style={{ "background-color": "transparent" }}>
@@ -129,15 +130,16 @@ function Test() {
                             </div>
 
                             <div className='form-check' style={{ "background-color": "transparent" }}>
-                                <input className='form-check-input' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionThree}
+                                <input className='form-check-input ' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionThree}
                                     name={index} type="radio" />
                                 <label className='form-check-label' htmlFor="option3">{data.optionThree}</label>
                             </div>
 
                             <div className='form-check' style={{ "background-color": "transparent" }}>
-                                <input className='form-check-input' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionFour}
+                                <input className='form-check-input ' onChange={(e) => onRadioButtonChange(e, index)} value={data.optionFour}
                                     name={index} type="radio" />
                                 <label className='form-check-label' htmlFor="option4">{data.optionFour}</label>
+                            </div>
                             </div>
                         </div>
                     );

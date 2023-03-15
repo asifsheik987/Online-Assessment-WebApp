@@ -15,7 +15,7 @@ function Result() {
 
     useEffect(() => {
         dispatch(getStudentResult(username));
-    }, []);
+    }, [dispatch]);
 
     const handleGoBack = (e) => {
         e.preventDefault();

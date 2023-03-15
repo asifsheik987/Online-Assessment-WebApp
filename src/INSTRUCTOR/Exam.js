@@ -44,22 +44,16 @@ function Exam() {
         setDisplay({ display: "none" });
     }
     const exams = useSelector(state=>state.exam.examList);
-    //const [exams, setExams] = useState([]);
     const {user} = useSelector((state)=>state.auth);
-    //const [subjects, setSubjects] = useState([]);
     const dispatch = useDispatch();
     useEffect(() => {
-            // let val = await axios.get(`http://localhost:8002/subjects/allSubjects`);
-            // setSubjects(val.data);
             dispatch(getAllSubjects());
 
     }, []);
      
 
     useEffect(() => {
-            //let value = await axios.get(`http://localhost:8002/exam/getByUserId/${user.id}`);
-            dispatch(getExamsForUser(user.id))//.unwrap().then(res=>{setExams(res)})
-            //console.log(value.data[0].name);
+            dispatch(getExamsForUser(user.id))
     }, []);
 
 
@@ -95,27 +89,7 @@ function Exam() {
 
     const [status, setStatus] = useState();
 
-
-    // ----------------------------Deleting Exam-----------------------------------------------
-
-    // const [questions, setQuestions] = useState([]);
-
-    // useEffect(() => {
-    //     async function getAllQuestions() {
-    //         let value = await axios.get(`http://localhost:8002/questions/allQuestions`);
-    //         setQuestions(value.data);
-    //     }
-    //     getAllQuestions();
-    // }, [])
-
-
     const [statusDeleteExam, setStatusDeleteExam] = useState();
-    // async function delQuestionsInExam(examId){
-    //     await axios.delete(`http://localhost:8002/questions/removeQFromExam/${examId}`);
-    // }
-    // async function delResultForExam(examId){
-    //     await axios.delete(`http://localhost:8002/result/deleteResultByExam/${examId}`)
-    // }
 
 
     async function deleteExam(id) {
@@ -130,25 +104,28 @@ function Exam() {
     if (statusDeleteExam) return <Exam />
 
     return (
-        <>
-            <div>
-                <h2>Exam List</h2>
+        <div className="container-fluid">
+        <div className="row">
+            <div className="col-12">
+                <h2 className="text-center my-4">Exam List</h2>
             </div>
+        </div>
 
-            <div >
-                <table className="table table-bordered table-striped table-hover text-center">
-                    <thead >
-                        <tr>
-                            <th>Exam Name</th>
-                            <th>Exam Desc.</th>
-                            <th>Exam Creation Date</th>
-                            <th>Subject</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            exams.map((data, i) => {
+        <div className="row">
+            <div className="col-12">
+                <div className="table-responsive">
+                    <table className="table table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>Exam Name</th>
+                                <th>Exam Desc.</th>
+                                <th>Exam Creation Date</th>
+                                <th>Subject</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {exams.map((data, i) => {
                                 return (
                                     <tr key={i}>
                                         <td>{data.examName}</td>
@@ -168,22 +145,26 @@ function Exam() {
                                                 <button className="btn btn-sm btn-outline-primary mx-1">Add Question</button>
                                             </NavLink>
 
-                                            <button className="btn btn-block btn-sm btn-outline-danger mx-1" onClick={() => deleteExam(data.id)}>Delete</button>
+                                            <button className="btn btn-sm btn-outline-danger mx-1" onClick={() => deleteExam(data.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 );
-                            })
-                        }
-
-                    </tbody>
-                </table>
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
 
             <div>
                 <button className="btn btn-outline-primary m-2" onClick={handleAddExam}>Add Exam</button>
             </div>
-
-            <Form style={display} ref={form}>
+            <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto" style={display}>
+        <div class="card border-0 shadow rounded-3 my-5" style={{"background-color":"transparent"}}>
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5"><b>Create Exam</b></h5>
+            <Form  ref={form}>
                 <label htmlFor=""><b>Enter Exam name</b> </label>
                 <Input className="form-control" style={{"background-color":"transparent"}} onChange={(e) => handleInput(e)} name="examName" type="text"
                     placeholder="Enter Exam name" validations={[required]} />
@@ -206,7 +187,8 @@ function Exam() {
                 </div>
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
             </Form>
-        </>
+            </div></div></div></div>
+        </div>
     );
 }
 

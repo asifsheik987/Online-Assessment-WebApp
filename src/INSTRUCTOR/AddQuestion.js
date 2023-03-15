@@ -65,12 +65,14 @@ function AddQuestion() {
 
 
   return (
-    <>
-      <div>
-        <h2>Adding Question</h2>
-      </div>
+    <div>
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto" >
+        <div class="card border-0 shadow rounded-3 my-5" style={{"background-color":"transparent"}}>
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5"><b>Add Question</b></h5>
 
-      <Form className="card" ref={form} style={{ "background-color": "transparent" }}>
+
+      <Form className="form" ref={form} style={{ "background-color": "transparent" }}>
         <label ><b>Question Name</b> </label>
         <Input className="form-control" style={{ "background-color": "transparent" }} onChange={(e) => onInputChange(e)}
           name="qname"
@@ -123,7 +125,8 @@ function AddQuestion() {
         </div>
         <CheckButton style={{ display: "none" }} ref={checkBtn} />
       </Form>
-    </>
+      </div></div></div>
+    </div>
   );
 }
 

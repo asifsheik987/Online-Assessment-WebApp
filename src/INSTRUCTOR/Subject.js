@@ -37,7 +37,7 @@ function Subject() {
     useEffect(() => {
         dispatch(getAllSubjects());
 
-    }, []);
+    }, [dispatch]);
 
 
     const [subject, setSubject] = useState({
@@ -68,9 +68,10 @@ function Subject() {
     }
 
 
-    const [statusDelete, setStatusDelete] = useState();
+    // const [statusDelete, setStatusDelete] = useState();
 
     if (status) return <Subject />;
+    // if (statusDelete) return <Subject />;
 
     // -------------------------------------------------------
 
@@ -81,6 +82,7 @@ function Subject() {
                 <div >
                     <h2>No Subject Available</h2>
                 </div>
+                <hr/>
 
                 <div >
                     <button className="btn btn-outline-primary m-2" onClick={handleAddSubject}>Add Subject</button>
@@ -111,6 +113,7 @@ function Subject() {
                 <div>
                     <h2>Subject List</h2>
                 </div>
+                <hr/>
 
                 <div >
                     <table className="table table bordered">
