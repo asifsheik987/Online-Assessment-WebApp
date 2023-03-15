@@ -105,7 +105,6 @@ public class AuthController {
             	switch (role) {
                 case "INSTRUCTOR":
                     Role insRole = roleService.findByName(Role_Type.INSTRUCTOR).get();
-//                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(insRole);
 
                     break;
