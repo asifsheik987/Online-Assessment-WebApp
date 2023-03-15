@@ -52,7 +52,6 @@ const Login = () => {
       dispatch(login({username,password}))
       .unwrap()
       .then((response)=>{
-        console.log(response.user.roles);
         if(response.user.roles.includes("INSTRUCTOR")){
           navigate("/instructor");
           window.location.reload();

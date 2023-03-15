@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addSubject, deleteSubject, getAllSubjects } from "../redux/slices/SubjectSlice";
+import { addSubject, deleteSubject, getAllSubjects } from "../../redux/slices/SubjectSlice";
 const required = (value) => {
     if (!value) {
         return (

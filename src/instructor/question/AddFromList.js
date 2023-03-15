@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { addQToExam, getQuestionsBySubject } from '../redux/slices/QuestionSlice';
+import { addQToExam, getQuestionsBySubject } from '../../redux/slices/QuestionSlice';
 
 function AddFromList(props) {
     const { examId, subjectName } = useParams();
@@ -42,6 +42,7 @@ function AddFromList(props) {
             <div>
                 <button className='btn btn-outline-primary' onClick={handleNewQuestion}>Add New Question</button>
             </div>
+            <br/>
             <table className='table table-hover table-striped'>
                 <thead className='thead-dark'>
                     <tr>

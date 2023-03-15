@@ -33,7 +33,7 @@ function Result() {
                 <h2>Student Exam List</h2>
             </div>
             <div>
-                <table className="table table-striped">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th>UserName</th>
@@ -50,7 +50,7 @@ function Result() {
                         {
                             results.map((data, i) => {
                                 return (
-                                    <tr key={i}>
+                                    <tr className={data.status === 'Fail' ? 'text-danger' : 'text-success'} key={i}>
                                         <td>{data.user.username}</td>
                                         <td>{data.exam.examName}</td>
                                         <td>{data.subject.name}</td>

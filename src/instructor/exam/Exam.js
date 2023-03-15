@@ -7,10 +7,10 @@ import CheckButton from "react-validation/build/button";
 import Select from "react-validation/build/select"
 
 import { Link, NavLink } from "react-router-dom";
-import authService from "../authentication/services/AuthenticationService";
+import authService from "../../authentication/services/AuthenticationService";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSubjects } from "../redux/slices/SubjectSlice";
-import { addExam, getExamsForUser } from "../redux/slices/examSlice";
+import { getAllSubjects } from "../../redux/slices/SubjectSlice";
+import { addExam, getExamsForUser } from "../../redux/slices/examSlice";
 
 const required = (value) => {
     if (!value) {

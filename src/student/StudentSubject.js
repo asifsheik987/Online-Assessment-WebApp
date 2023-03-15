@@ -84,14 +84,14 @@ function StudentSubject() {
                         return (
                             <div className="col-md-4" key={i}>
                                 <div className="card m-3 border border-secondary border-3" style={{"background-color":"transparent"}}>
-                                    <div className="card-header bg-info text-white  text-center" style={{"background-color":"transparent"}}>
+                                    <div className="card-header bg-primary text-white  text-center" style={{"background-color":"transparent"}}>
                                         <span><b>{data.name}</b></span>
                                     </div>
                                    
                                     <div className="card-footer" style={{"background-color":"transparent"}} >
                                         <div className="text-center">
                                         <Link to={`/studentExam/${data.name}`}>
-                                            <button className="btn btn-outline-info">Go to Exam</button>
+                                            <button className="btn btn-outline-primary">Go to Exam</button>
                                         </Link>
                                         </div>
                                     </div>

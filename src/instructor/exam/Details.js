@@ -1,8 +1,8 @@
  import {useEffect , useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
    import { useNavigate, useParams} from "react-router-dom";
-import authService from "../authentication/services/AuthenticationService";
-import { getExamById } from "../redux/slices/examSlice";
+import authService from "../../authentication/services/AuthenticationService";
+import { getExamById } from "../../redux/slices/examSlice";
 
     
     function Details(){

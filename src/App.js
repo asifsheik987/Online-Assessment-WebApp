@@ -7,21 +7,21 @@ import Register from './authentication/components/Register';
 import StudentBoard from './authentication/components/StudentBoard';
 import InstructorBoard from './authentication/components/InstructorBoard';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import Subject from './instructor/Subject';
-import Exam from './instructor/Exam';
-import Question from './instructor/Question';
-import Details from './instructor/Details';
-import StudentList from './instructor/StudentList';
-import ViewQuestion from './instructor/ViewQuestion'
-import AddFromList from './instructor/AddFromList';
-import AddQuestion from './instructor/AddQuestion';
+import Subject from './instructor/subject/Subject';
+import Exam from './instructor/exam/Exam';
+import Question from './instructor/question/Question';
+import Details from './instructor/exam/Details';
+import StudentList from './instructor/result/StudentList';
+import ViewQuestion from './instructor/question/ViewQuestion'
+import AddFromList from './instructor/question/AddFromList';
+import AddQuestion from './instructor/question/AddQuestion';
 import StudentSubject from './student/StudentSubject';
 import StudentExam from './student/StudentExam';
 import Test from './student/Test';
 import Result from './student/Result';
 import Solutions from './student/Solutions';
-import StudentResult from './instructor/StudentResult';
-import AllExam from './instructor/AllExam';
+import StudentResult from './instructor/result/StudentResult';
+import AllExam from './instructor/exam/AllExam';
 import { logout } from './redux/slices/AuthSlice';
 
 

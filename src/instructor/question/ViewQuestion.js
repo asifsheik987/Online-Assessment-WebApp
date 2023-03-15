@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import authService from "../authentication/services/AuthenticationService";
+import authService from "../../authentication/services/AuthenticationService";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteQFromExam, deleteQuestn, getQuestionsForExam, updateQuestion } from "../redux/slices/QuestionSlice";
+import { deleteQFromExam, deleteQuestn, getQuestionsForExam, updateQuestion } from "../../redux/slices/QuestionSlice";
 
 function ViewQuestion() {
 

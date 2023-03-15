@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllQuestions } from "../redux/slices/QuestionSlice";
+import { getAllQuestions } from "../../redux/slices/QuestionSlice";
 function Question() {
 
     const { questionList, isLoading } = useSelector((state) => state.question);

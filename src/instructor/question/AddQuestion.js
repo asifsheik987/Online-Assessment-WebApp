@@ -5,7 +5,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import Select from "react-validation/build/select"
 import { useDispatch, useSelector } from "react-redux";
-import { addNewQuestion } from "../redux/slices/QuestionSlice";
+import { addNewQuestion } from "../../redux/slices/QuestionSlice";
 
 const required = (value) => {
   if (!value) {
