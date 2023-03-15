@@ -40,11 +40,22 @@ public class SubjectController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
+	
+	@GetMapping("/getSubject/{subjectName}")
+	public ResponseEntity<?> getSubjectByName(@PathVariable(name = "subjectName") String name) {
+		try {
+			Subject subject = service.getSubjectByName(name);
+			return ResponseEntity.status(HttpStatus.OK).body(subject);
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
+	}
 
 	@PostMapping("/addSubject")
 	public ResponseEntity<?> addNewSubject(@RequestBody Subject subject) {
 		try {
-			Subject Subject_added = service.addNewSubject(subject);
+			Subject Subject_added = service.createNewSubject(subject);
 			return ResponseEntity.status(HttpStatus.CREATED).body(Subject_added);
 		} catch (ExceptionHandler e) {
 			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
@@ -66,15 +77,6 @@ public class SubjectController {
 		}
 	}
 
-	@GetMapping("/getSubject/{subjectName}")
-	public ResponseEntity<?> getSubjectByName(@PathVariable(name = "subjectName") String name) {
-		try {
-			Subject subject = service.getSubjectByName(name);
-			return ResponseEntity.status(HttpStatus.OK).body(subject);
-		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-		}
-	}
+	
 
 }

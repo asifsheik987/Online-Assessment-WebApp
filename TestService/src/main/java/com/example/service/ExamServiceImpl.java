@@ -41,7 +41,7 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public Exam addNewExam(Exam exam) {
+	public Exam createNewExam(Exam exam) {
 		if (exam.getExamName().isEmpty() || exam.getSubject().equals(null) || exam.getExamName().length() == 0) {
 			throw new ExceptionHandler( "Exam fields cannot be Empty!!!");
 		}

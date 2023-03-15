@@ -12,7 +12,7 @@ public interface ExamService {
 	
 	public Exam getParticularExam(int id);
 	
-	public Exam addNewExam(Exam exam );
+	public Exam createNewExam(Exam exam );
 	
 	public void deleteExamById(int id);
 	

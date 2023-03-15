@@ -38,7 +38,41 @@ public class ExamController {
 			List<Exam> exams = service.getAllExam();
 			return ResponseEntity.status(HttpStatus.OK).body(exams);
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
+	}
+
+	@GetMapping("/getExam/{id}")
+	public ResponseEntity<?> getExam(@PathVariable int id) {
+		try {
+			Exam exam = service.getParticularExam(id);
+			return ResponseEntity.status(HttpStatus.OK).body(exam);
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
+
+	}
+
+	@GetMapping("/getExamOnSubjectName/{subjectName}")
+	public ResponseEntity<?> getExamsOnSubjectName(@PathVariable String subjectName) {
+		try {
+			List<Exam> exams = service.getBySubjectName(subjectName);
+			return ResponseEntity.ok(exams);
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+		}
+	}
+
+	@GetMapping("/getByUserId/{userId}")
+	public ResponseEntity<?> getExamsByUserId(@PathVariable(name = "userId") Long userId) {
+		try {
+			List<Exam> exams = service.getByUserId(userId);
+			return ResponseEntity.ok(exams);
+		} catch (ExceptionHandler e) {
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}
@@ -55,7 +89,7 @@ public class ExamController {
 			user.setId(quiz.getUserId());
 			exam.setUser(user);
 			exam.setSubject(subject);
-			Exam examCreated = service.addNewExam(exam);
+			Exam examCreated = service.createNewExam(exam);
 			return ResponseEntity.status(HttpStatus.CREATED).body(examCreated);
 		} catch (ExceptionHandler e) {
 			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
@@ -66,47 +100,13 @@ public class ExamController {
 		}
 	}
 
-	@GetMapping("/getExam/{id}")
-	public ResponseEntity<?> getExam(@PathVariable int id) {
-		try {
-			Exam exam = service.getParticularExam(id);
-			return ResponseEntity.status(HttpStatus.OK).body(exam);
-		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-		}
-
-	}
-
 	@DeleteMapping("/deleteExam/{id}")
 	public ResponseEntity<?> deleteExam(@PathVariable int id) {
 		try {
 			service.deleteExamById(id);
 			return ResponseEntity.status(HttpStatus.OK).body("1 Exam deleted");
 		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-		}
-	}
-
-	@GetMapping("/getExamOnSubjectName/{subjectName}")
-	public ResponseEntity<?> getExamsOnSubjectName(@PathVariable String subjectName) {
-		try {
-			List<Exam> exams = service.getBySubjectName(subjectName);
-			return ResponseEntity.ok(exams);
-		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-		}
-	}
-
-	@GetMapping("/getByUserId/{userId}")
-	public ResponseEntity<?> getExamsByUserId(@PathVariable(name = "userId") Long userId) {
-		try {
-			List<Exam> exams = service.getByUserId(userId);
-			return ResponseEntity.ok(exams);
-		} catch (ExceptionHandler e) {
-			ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
+			ExceptionHandler ex = new ExceptionHandler(e.getErrorMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
 		}
 	}

@@ -53,7 +53,7 @@ public class UserController {
     	return ResponseEntity.status(HttpStatus.OK).body(user);
     	}catch(ExceptionHandler e) {
     		ExceptionHandler ex = new ExceptionHandler( e.getErrorMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErrorMessage());
     	}
     	
     }

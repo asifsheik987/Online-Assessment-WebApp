@@ -8,7 +8,7 @@ public interface SubjectService {
 	
 	public List<Subject> getAllSubjects();
 	
-	public Subject addNewSubject(Subject subject );
+	public Subject createNewSubject(Subject subject );
 	
 	public void deleteSubjectById(int id);
 	

@@ -11,7 +11,7 @@ public interface ResultService {
 	
 	public List<Result> getAllResult();
 	
-	public  Result addNewResult(Result result);
+	public  Result createNewResult(Result result);
 	
 	public List<Result> getAllResultForStudent( String userName);
 	

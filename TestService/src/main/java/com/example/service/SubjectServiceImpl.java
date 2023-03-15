@@ -29,7 +29,7 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public Subject addNewSubject(Subject subject) {
+	public Subject createNewSubject(Subject subject) {
 		if (subject.getName().isEmpty() || subject.getName().length() == 0)
 			throw new ExceptionHandler("Subject name cannot be empty!!!");
 		try {

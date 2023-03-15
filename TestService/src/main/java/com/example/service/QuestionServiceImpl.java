@@ -28,7 +28,7 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public Question addNewQuestion(Question question) {
+	public Question createNewQuestion(Question question) {
 		if (question.getQname().isEmpty() || question.getExam().isEmpty() || question.getSubject().equals(null))
 			throw new ExceptionHandler("Question fields cannot be Empty ");
 		try {

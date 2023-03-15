@@ -7,7 +7,7 @@ import com.example.model.Question;
 public interface QuestionService {
 		 public List<Question> getAllQuestion();
 		
-		 public Question addNewQuestion(Question question );
+		 public Question createNewQuestion(Question question );
 		 
 		 
 		 public List<Question> getAllQuestionForExam(int id);

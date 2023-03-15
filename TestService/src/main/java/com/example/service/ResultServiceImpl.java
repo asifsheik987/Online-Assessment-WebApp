@@ -30,7 +30,7 @@ public class ResultServiceImpl implements ResultService {
 	}
 
 	@Override
-	public Result addNewResult(Result result) {
+	public Result createNewResult(Result result) {
 		if (result.getScore().isEmpty() || result.getStatus().isEmpty() || result.getSubject().equals(null)
 				|| result.getUser().equals(null) || result.getExam().equals(null))
 			throw new ExceptionHandler("Result fields cannot be Empty!!!");
